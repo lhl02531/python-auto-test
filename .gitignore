@@ -1,0 +1,10 @@
+/venv/
+/allure/
+/allure-report/
+/.pytest_cache/
+/report/
+/res/
+/.idea/
+__pycache__/
+
+
