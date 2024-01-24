@@ -13,7 +13,7 @@ import json
 from utils.request import Request
 
 # 数据库对象
-db = DB()
+# db = DB()
 
 
 

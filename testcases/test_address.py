@@ -12,7 +12,7 @@ from db.db import DB
 import json
 from utils.request import Request
 
-db = DB()
+# db = DB()
 
 
 # 使用 fixture 实现全局变量
