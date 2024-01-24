@@ -29,9 +29,10 @@ def getToken():
     url = 'http://' + request_prefix + request_url
     res = Request.send_request(url, method=request_type, data=dataDict)
     cookies = res.cookies
+    db.close()
     yield cookies
     print('module end')
-    db.close()
+
 
 
 

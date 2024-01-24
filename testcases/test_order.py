@@ -12,7 +12,7 @@ import json
 from utils.request import Request
 
 # 数据库对象
-# db = DB()
+db = DB()
 
 
 # 获取订单提交 数据源
