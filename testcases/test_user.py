@@ -8,14 +8,13 @@ desc: 测试用例 user
 """
 
 import pytest
-from db.db import DB
+from db.db import db
 import json
 from utils.request import Request
 
+
 # 数据库对象
-db = DB()
-
-
+# db = DB()
 
 
 # 获取 login 数据源
@@ -27,59 +26,46 @@ def data_login():
     return data
 
 
-@pytest.mark.parametrize("result", data_login())
-def test_login(result):
-    id = result[0]
-    name = result[1]
-    module = result[2]
-    request_prefix = result[3]
-    request_url = result[4]
-    request_type = result[5]
-    need_login = result[6]
-    data = result[7]
-    expect_result = result[8]
-    real_result = result[9]
-    test_result = result[10]
-    data_type = result[11]
+@pytest.mark.parametrize("res", data_login())
+def test_login(res):
+
+    request_prefix = res[3]
+    request_url = res[4]
+    request_type = res[5]
+    data = res[7]
+    expect_result = res[8]
     url = 'http://' + request_prefix + request_url
     dataDict = json.loads(data)
     expect_resultDict = json.loads(expect_result)
-    # print( dataDict, type(dataDict),expect_resultDict, type(expect_resultDict))
-    res = Request.send_request(url, method=request_type, data=dataDict).json()
-    # print('res==>',res)
-    assert  expect_resultDict["errno"]==res["errno"]
-    assert  expect_resultDict["message"] ==  res["message"]
-
+    resp = Request.send_request(url, method=request_type, data=dataDict).json()
+    assert expect_resultDict["errno"] == resp["errno"]
+    assert expect_resultDict["message"] == resp["message"]
 
 
 # 获取 register 数据源
 def data_register():
     SQL = "SELECT * from user " \
           "WHERE (id = '004' OR id = '005' OR id = '006') " \
-          "AND (name='succ-register' OR name='error-username_repeat_fail' OR name='error-username_confirmpassword_fail')"
+          "AND (name='succ-register' OR name='error-username_repeat_fail' OR " \
+          "name='error-username_confirmpassword_fail')"
     data = db.executeSql(SQL)
     return data
 
 
-@pytest.mark.parametrize("result", data_register())
-def test_register(result):
-    id = result[0]
-    name = result[1]
-    module = result[2]
-    request_prefix = result[3]
-    request_url = result[4]
-    request_type = result[5]
-    need_login = result[6]
-    data = result[7]
-    expect_result = result[8]
-    real_result = result[9]
-    test_result = result[10]
-    data_type = result[11]
+@pytest.mark.parametrize("res", data_register())
+def test_register(res):
+    request_prefix = res[3]
+    request_url = res[4]
+    request_type = res[5]
+    data = res[7]
+    expect_result = res[8]
     url = 'http://' + request_prefix + request_url
     dataDict = json.loads(data)
     expect_resultDict = json.loads(expect_result)
-    # print( url, dataDict, type(dataDict),expect_resultDict, type(expect_resultDict))
-    res = Request.send_request(url, method=request_type, data=dataDict).json()
-    # print('res==>',res)
-    assert  expect_resultDict["errno"]==res["errno"]
-    assert  expect_resultDict["message"] ==  res["message"]
+    resp = Request.send_request(url, method=request_type, data=dataDict).json()
+    assert expect_resultDict["errno"] == resp["errno"]
+    assert expect_resultDict["message"] == resp["message"]
+
+
+if __name__ == '__main__':
+    pytest.main(['test_user.py', '-v'])

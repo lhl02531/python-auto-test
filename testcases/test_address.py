@@ -8,11 +8,10 @@ desc: 测试用例 address
 """
 
 import pytest
-from db.db import DB
+from db.db import db
 import json
 from utils.request import Request
 
-db = DB()
 
 # 使用 fixture 实现全局变量
 @pytest.fixture(scope="session")

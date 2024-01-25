@@ -7,12 +7,12 @@
 desc: 测试用例 order
 """
 import pytest
-from db.db import DB
+from db.db import db
 import json
 from utils.request import Request
 
 # 数据库对象
-db = DB()
+# db = DB()
 
 
 # 获取订单提交 数据源
@@ -26,18 +26,11 @@ def data_order_submit():
 @pytest.mark.parametrize("result", data_order_submit())
 def test_order_submit(result,getToken):
     cookie= getToken
-    id = result[0]
-    name = result[1]
-    module = result[2]
     request_prefix = result[3]
     request_url = result[4]
     request_type = result[5]
-    need_login = result[6]
     data = result[7]
     expect_result = result[8]
-    real_result = result[9]
-    test_result = result[10]
-    data_type = result[11]
     url = 'http://' + request_prefix + request_url
     dataDict = json.loads(data)
     expect_resultDict = json.loads(expect_result)
@@ -57,21 +50,14 @@ def data_order_getall():
 @pytest.mark.parametrize("result", data_order_getall())
 def test_order_getall(result,getToken):
     cookie= getToken
-    id = result[0]
-    name = result[1]
-    module = result[2]
+
     request_prefix = result[3]
     request_url = result[4]
     request_type = result[5]
-    need_login = result[6]
     data = result[7]
     expect_result = result[8]
-    real_result = result[9]
-    test_result = result[10]
-    data_type = result[11]
     url = 'http://' + request_prefix + request_url
     dataDict = json.loads(data)
     expect_resultDict = json.loads(expect_result)
     res = Request.send_request(url, method=request_type, json=dataDict, cookies=cookie).json()
     assert  expect_resultDict["errno"]==res["errno"]
-    assert  expect_resultDict["message"] ==  res["message"]

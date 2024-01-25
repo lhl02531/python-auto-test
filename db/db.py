@@ -2,10 +2,13 @@ import os
 
 import pymysql
 import yaml
+from  utils.singleton import singleton
 
-
+@singleton
 class DB:
     def __init__(self):
+        print('初始化')
+
         # 读取配置文件
         # C:\Users\lv\Desktop\fangjindong\fangJD\config\db.yaml
         current_path = os.getcwd()
@@ -27,4 +30,10 @@ class DB:
 
     # 数据库连接关闭
     def close(self):
+        print('关闭数据库')
         self.db.close()
+
+
+db = DB()
+
+
