@@ -1,4 +1,4 @@
-"host": "mariadb"
+"host": "192.168.56.101"
 "port": 3306
 "user": "root"
 "password": "123456"
